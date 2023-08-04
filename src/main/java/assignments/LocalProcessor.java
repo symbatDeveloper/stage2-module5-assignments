@@ -15,20 +15,24 @@ import lombok.Setter;
 @Setter
 public class LocalProcessor {
     private String processorName;
-    private Long period = 10000000000000L;
+    private Long period = 10_000_000_000_000L;
     private String ProcessorVersion;
     private Integer valueOfCheap;
-    Scanner informationScanner;
-    static LinkedList<String> stringArrayList = new LinkedList<>();
+   private Scanner informationScanner;
+    private LinkedList<String> ArrayList = new LinkedList<>();
+    private StringBuilder stringBuilder;
 
     public LocalProcessor(String processorName, Long period, String processorVersion, Integer valueOfCheap,
                           Scanner informationscanner, LinkedList<String> stringArrayList) {
         this.processorName = processorName;
         this.period = period;
         ProcessorVersion = processorVersion;
+        if(informationScanner ==null){
+        throw new IllegalStateException();
+        }
         this.valueOfCheap = valueOfCheap;
         this.informationScanner = informationscanner;
-        this.stringArrayList = stringArrayList;
+        ArrayList = stringArrayList;
     }
 
     public LocalProcessor() {
@@ -36,18 +40,22 @@ public class LocalProcessor {
 
     @ListIteratorAnnotation
     public void listIterator(LinkedList<String> stringList) {
-        stringArrayList = new LinkedList<>(stringList);
-        for (int i = 0; i < period; i++) {
-            System.out.println(stringArrayList.get(i).hashCode());
+       for(String string : stringList){
+          if(string != null){
+              string.hashCode();
+          }
         }
+
     }
 
     @FullNameProcessorGeneratorAnnotation
     public String ProcessorGenerator(LinkedList<String> stringList) {
-        for (int i = 0; i < stringArrayList.size(); i++) {
-            processorName+=stringList.get(i)+' ';
-        }
-        return processorName;
+            stringBuilder = new StringBuilder();
+            for(String str : stringList){
+                stringBuilder.append(str).append(' ');
+            }
+
+        return stringBuilder.toString();
     }
 
     @ReadFullProcessorNameAnnotation
